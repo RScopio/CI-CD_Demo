@@ -22,8 +22,9 @@
 ## GitHub Actions
 
 - Quickstart: https://docs.github.com/en/actions/quickstart
-- Self-hosted runners: https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners#supported-architectures-and-operating-systems-for-self-hosted-runners
+- Self-hosted runners: https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners
 - Starter Workflow: https://github.com/actions/starter-workflows
+- Actions on GitHub Enterprise: https://docs.github.com/en/enterprise-server@2.22/admin/github-actions/managing-access-to-actions-from-githubcom/about-using-actions-in-your-enterprise
 
 ## Azure Pipelines
 
