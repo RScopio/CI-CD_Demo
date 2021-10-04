@@ -15,4 +15,4 @@ runs:
 
   - name: Restore dependencies
     run: dotnet restore ${{ inputs.solution-path }}
-    shell: pwsh
+    shell: bash
