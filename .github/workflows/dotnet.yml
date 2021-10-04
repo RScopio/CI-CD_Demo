@@ -7,20 +7,26 @@ on:
     branches: [ main ]
 
 jobs:
-  build-test-deploy:
+  test:
     runs-on: self-hosted
     env:
-      WEB_APP: .\src\WebApplication\WebApplication.sln
+      SOLUTION: ./src/GitHubActionsDemo/GitHubActionsDemo.sln
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
+    - uses: MedPOINT/configure-dotnet@v1
       with:
-        dotnet-version: 5.0.x
-    - name: Restore dependencies
-      run: dotnet restore ${{ env.WEB_APP }}
-    - name: Build
-      run: dotnet build --no-restore ${{ env.WEB_APP }}
+        solution-path: ${{ env.SOLUTION }}
     - name: Test
-      run: dotnet test --no-build --verbosity normal ${{ env.WEB_APP }}
-      
+      run: dotnet test --no-build --verbosity normal ${{ env.SOLUTION }}
+
+  web-app:
+    needs: test
+    runs-on: self-hosted
+    env:
+      SOLUTION: ./src/GitHubActionsDemo/GitHubActionsDemo.sln
+      WEB_APP: ./src/GitHubActionsDemo/WebApplication/WebApplication.csproj
+    steps:
+    - uses: MedPOINT/configure-dotnet@v1
+      with:
+        solution-path: ${{ env.SOLUTION }}
+    - name: Build
+      run: dotnet build --no-restore ${{ env.WEB_APP }} --configuration Release

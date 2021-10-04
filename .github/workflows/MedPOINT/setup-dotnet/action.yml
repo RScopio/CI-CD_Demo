@@ -1,0 +1,21 @@
+name: "Configure .NET"
+description: "Runs actions/checkout@v2, actions/setup-dotnet@v1 and dotnet restore on the solution"
+
+inputs:
+  solution-path:
+    description: "Path to the solution file"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    name: Checkout Repo
+    uses: actions/checkout@v2
+
+    name: Setup .NET
+    uses: actions/setup-dotnet@v1
+    with:
+      dotnet-version: 5.0.x
+
+    name: Restore dependencies
+    run: dotnet restore ${{ inputs.solution-path }}

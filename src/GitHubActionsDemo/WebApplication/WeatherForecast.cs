@@ -1,6 +1,6 @@
 using System;
 
-namespace WebApplication
+namespace WebApplicationCore
 {
     public class WeatherForecast
     {
