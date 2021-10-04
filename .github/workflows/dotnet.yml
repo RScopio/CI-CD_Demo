@@ -6,13 +6,14 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  SOLUTION: ./src/GitHubActionsDemo/GitHubActionsDemo.sln
+
 jobs:
   test:
     runs-on: self-hosted
-    env:
-      SOLUTION: ./src/GitHubActionsDemo/GitHubActionsDemo.sln
     steps:
-    - uses: MedPOINT/configure-dotnet@v1
+    - uses: ./.github/actions/config-dotnet
       with:
         solution-path: ${{ env.SOLUTION }}
     - name: Test
@@ -22,10 +23,9 @@ jobs:
     needs: test
     runs-on: self-hosted
     env:
-      SOLUTION: ./src/GitHubActionsDemo/GitHubActionsDemo.sln
       WEB_APP: ./src/GitHubActionsDemo/WebApplication/WebApplication.csproj
     steps:
-    - uses: MedPOINT/configure-dotnet@v1
+    - uses: ./.github/actions/config-dotnet
       with:
         solution-path: ${{ env.SOLUTION }}
     - name: Build
