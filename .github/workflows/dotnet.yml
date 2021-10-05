@@ -99,4 +99,4 @@ jobs:
     - name: Build
       run: dotnet pack ${{ env.LIB_PROJ }} --configuration Release # Framework libraries use nuget.exe to pack
     - name: Deploy
-      run: nuget.exe init ${{ env.LIB_PROJ }}
+      run: nuget.exe init ${{ env.LIB_PROJ }} ./src/GitHubActionsDemo/ClassLibrary/bin/packages
