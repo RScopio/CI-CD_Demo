@@ -15,9 +15,12 @@ jobs:
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v2
-    - uses: ./.github/config-dotnet
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
       with:
-        solution-path: ${{ env.SOLUTION }}
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore ${{ inputs.solution-path }}
     - name: Test
       run: dotnet test --no-build --verbosity normal ${{ env.SOLUTION }}
 
@@ -29,8 +32,11 @@ jobs:
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v2
-    - uses: ./.github/config-dotnet
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
       with:
-        solution-path: ${{ env.SOLUTION }}
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore ${{ inputs.solution-path }}
     - name: Build
       run: dotnet build --no-restore ${{ env.WEB_APP }} --configuration Release
