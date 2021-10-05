@@ -20,7 +20,7 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore ${{ inputs.solution-path }}
+      run: dotnet restore ${{ env.SOLUTION }}
     - name: Test
       run: dotnet test --no-build --verbosity normal ${{ env.SOLUTION }}
 
@@ -37,6 +37,6 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore ${{ inputs.solution-path }}
+      run: dotnet restore ${{ env.SOLUTION }}
     - name: Build
       run: dotnet build --no-restore ${{ env.WEB_APP }} --configuration Release
