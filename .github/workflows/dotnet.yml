@@ -28,7 +28,7 @@ jobs:
     needs: test
     runs-on: self-hosted
     env:
-      CONSOLE_PROJ: ./src/GitHubActionsDemo/ConsoleApp/ConsoleApp.csproj
+      CONSOLE_PROJ: ./src/GitHubActionsDemo/ConsoleApp/
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v2
@@ -47,7 +47,7 @@ jobs:
     needs: test
     runs-on: self-hosted
     env:
-      WEB_PROJ: ./src/GitHubActionsDemo/WebApplication/WebApplication.csproj
+      WEB_PROJ: ./src/GitHubActionsDemo/WebApplication/
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v2
@@ -66,7 +66,7 @@ jobs:
     needs: test
     runs-on: self-hosted
     env:
-      WINFORM_PROJ: ./src/GitHubActionsDemo/WinFormsApp/WinFormsApp.csproj
+      WINFORM_PROJ: ./src/GitHubActionsDemo/WinFormsApp/
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v2
@@ -86,7 +86,8 @@ jobs:
     needs: test
     runs-on: self-hosted
     env:
-      LIB_PROJ: ./src/GitHubActionsDemo/ClassLibrary/ClassLibrary.csproj
+      LIB_PROJ: ./src/GitHubActionsDemo/ClassLibrary/
+      LIB_DEST: ./src/GitHubActionsDemo/ClassLibrary/bin/packages
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v2
@@ -99,4 +100,4 @@ jobs:
     - name: Build
       run: dotnet pack ${{ env.LIB_PROJ }} --configuration Release # Framework libraries use nuget.exe to pack
     - name: Deploy
-      run: nuget.exe init ${{ env.LIB_PROJ }} ./src/GitHubActionsDemo/ClassLibrary/bin/packages
+      run: nuget.exe init ${{ env.LIB_PROJ }} ${{ env.LIB_DEST }}
