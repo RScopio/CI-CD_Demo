@@ -24,11 +24,11 @@ jobs:
     - name: Test
       run: dotnet test --verbosity normal ${{ env.SOLUTION }}
 
-  web-app:
+  console-app:
     needs: test
     runs-on: self-hosted
     env:
-      WEB_APP: ./src/GitHubActionsDemo/WebApplication/WebApplication.csproj
+      CONSOLE_PROJ: ./src/GitHubActionsDemo/ConsoleApp/ConsoleApp.csproj
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v2
@@ -39,4 +39,64 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ${{ env.SOLUTION }}
     - name: Build
-      run: dotnet build --no-restore ${{ env.WEB_APP }} --configuration Release
+      run: dotnet build --no-restore ${{ env.CONSOLE_PROJ }} --configuration Release
+    - name: Deploy
+      run: dotnet publish ${{ env.CONSOLE_PROJ }} -c Release
+
+  web-app:
+    needs: test
+    runs-on: self-hosted
+    env:
+      WEB_PROJ: ./src/GitHubActionsDemo/WebApplication/WebApplication.csproj
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore ${{ env.SOLUTION }}
+    - name: Build
+      run: dotnet build --no-restore ${{ env.WEB_PROJ }} --configuration Release
+    - name: Deploy
+      run: dotnet publish ${{ env.WEB_PROJ }} -c Release
+
+  winform-app:
+    needs: test
+    runs-on: self-hosted
+    env:
+      WINFORM_PROJ: ./src/GitHubActionsDemo/WinFormsApp/WinFormsApp.csproj
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore ${{ env.SOLUTION }}
+    # .NET Framework Win-Forms apps would use MSBuild instead of dotnet for building and deploying
+    - name: Build
+      run: dotnet build --no-restore ${{ env.WINFORM_PROJ }} --configuration Release
+    - name: Deploy
+      run: dotnet publish ${{ env.WINFORM_PROJ }} -c Release
+
+  class-library:
+    needs: test
+    runs-on: self-hosted
+    env:
+      LIB_PROJ: ./src/GitHubActionsDemo/ClassLibrary/ClassLibrary.csproj
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore ${{ env.SOLUTION }}
+    - name: Build
+      run: dotnet pack ${{ env.LIB_PROJ }} --configuration Release # Framework libraries use nuget.exe to pack
+    - name: Deploy
+      run: nuget.exe init ${{ env.LIB_PROJ }}
