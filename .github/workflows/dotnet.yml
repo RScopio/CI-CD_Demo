@@ -1,4 +1,4 @@
-name: .NET Core Build\Test\Deploy
+name: .NET Core Build/Test/Deploy
 
 on:
   push:
@@ -7,15 +7,15 @@ on:
     branches: [ main ]
 
 env:
-  SOLUTION: .\src\GitHubActionsDemo\GitHubActionsDemo.sln
+  SOLUTION: ./src/GitHubActionsDemo/GitHubActionsDemo.sln
 
 jobs:
   test:
     runs-on: self-hosted
     steps:
     - name: Checkout Repo
-      uses: actions\checkout@v2
-    - uses: ./actions/config-dotnet
+      uses: actions/checkout@v2
+    - uses: ./config-dotnet
       with:
         solution-path: ${{ env.SOLUTION }}
     - name: Test
@@ -25,11 +25,11 @@ jobs:
     needs: test
     runs-on: self-hosted
     env:
-      WEB_APP: .\src\GitHubActionsDemo\WebApplication\WebApplication.csproj
+      WEB_APP: ./src/GitHubActionsDemo/WebApplication/WebApplication.csproj
     steps:
     - name: Checkout Repo
-      uses: actions\checkout@v2
-    - uses: ./actions/config-dotnet
+      uses: actions/checkout@v2
+    - uses: ./config-dotnet
       with:
         solution-path: ${{ env.SOLUTION }}
     - name: Build
