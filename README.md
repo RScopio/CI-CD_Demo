@@ -15,9 +15,9 @@
 - Your team will need to write automated tests for each new feature, improvement or bug fix.
 - You need a continuous integration server that can monitor the main repository and run the tests automatically for every new commits pushed.
 
-![CI/CD](resources/ci_cd.png)
+![CI/CD](resources/ci_cd.jpg)
 
-![CI/CD](resources/continuous_diagram.png)
+![CI/CD](resources/continuous_diagram.jpg)
 
 ## GitHub Actions
 
