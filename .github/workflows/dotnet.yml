@@ -22,7 +22,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ${{ env.SOLUTION }}
     - name: Test
-      run: dotnet test --no-build --verbosity normal ${{ env.SOLUTION }}
+      run: dotnet test --verbosity normal ${{ env.SOLUTION }}
 
   web-app:
     needs: test
